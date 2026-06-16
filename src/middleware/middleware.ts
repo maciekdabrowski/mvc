@@ -3,6 +3,9 @@ import { Express } from 'express';
 import express from 'express';
 import session from 'express-session';
 import { injectSessionData } from './session-data.middleware';
+import createMemoryStore from 'memorystore';
+
+const MemoryStore = createMemoryStore(session);
 
 export class Middleware {
   public static enable(server: Express): void {
@@ -19,6 +22,9 @@ export class Middleware {
           secure: false,
           maxAge: 60 * 60 * 1000,
         },
+        store: new MemoryStore({
+          checkPeriod: 24 * 60 *60 * 1000,
+        }),
       }),
     );
 
