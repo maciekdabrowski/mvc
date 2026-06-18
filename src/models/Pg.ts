@@ -13,10 +13,20 @@ export class PG {
       user: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
     } as const;
-    this.client = pgp({
-      ...credentials,
-      allowExitOnIdle: true,
-    });
+    
+    const connectionString = process.env.DATABASE_URL;
+
+    this.client = pgp(
+      connectionString
+        ? {
+            connectionString: connectionString,
+            allowExitOnIdle: false,
+          }
+        : {
+            ...credentials,
+            allowExitOnIdle: true,
+          },
+    );
   }
 
   static getInstance(): PG {
