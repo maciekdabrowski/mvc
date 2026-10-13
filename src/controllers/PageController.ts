@@ -90,4 +90,41 @@ export class PageController {
       res.redirect('/z1/wyglad');
     };
   }
+  static galleryPage() {
+    return async (req: Request, res: Response) => {
+      const galeriaWybrana = (req.query.galeria as string) || 'standing';
+      const sortuj = (req.query.sortuj as string) || 'najstarsze';
+      const strona = parseInt(req.query.strona as string) || 1;
+      const data =
+        galeriaWybrana === 'dodaj'
+          ? []
+          : await PG.getInstance().queryZdjecia(galeriaWybrana);
+      res.send(
+        new SiteBuilder('Galeria', res.locals.user).generateView(
+          'galeria',
+          req.session.bgColor,
+          data,
+          galeriaWybrana,
+          sortuj,
+          strona,
+        ),
+      );
+    };
+  }
+  static handleAddPhoto() {
+    return async (req: Request, res: Response) => {
+      const { galeria, komentarz } = req.body;
+      if (req.file && galeria) {
+        await PG.getInstance().dodajZdjecie(req.file.filename, galeria, komentarz);
+      }
+      res.redirect(`/z1/galeria?galeria=${galeria}`);
+    };
+  }
+  static handleDeletePhoto() {
+    return async (req: Request, res: Response) => {
+      const { idt, galeria } = req.body;
+      await PG.getInstance().usunZdjecie(idt);
+      res.redirect(`/z1/galeria?galeria=${galeria}`);
+    };
+  }
 }

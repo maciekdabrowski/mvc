@@ -10,3 +10,4 @@ export * from './contactPage';
 export * from './appearancePage';
 export * from './loginPage';
 export { bazaContent } from './baza';
+export { galeriaContent } from './galeria';
