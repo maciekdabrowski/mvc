@@ -33,9 +33,11 @@
   },
   "dependencies": {
     "@types/express": "^5.0.5",
+    "@types/multer": "^2.2.0",
     "express": "^5.2.0",
     "express-session": "^1.19.0",
     "memorystore": "^1.6.8",
+    "multer": "^2.2.0",
     "pg-promise": "^12.3.0"
   }
 }

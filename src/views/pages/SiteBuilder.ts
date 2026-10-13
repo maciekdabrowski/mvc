@@ -13,6 +13,7 @@ import {
   appearanceContent,
   loginContent,
   bazaContent,
+  galeriaContent,
 } from '../layouts/index';
 
 export class SiteBuilder extends SiteTemplate implements View {
@@ -20,7 +21,14 @@ export class SiteBuilder extends SiteTemplate implements View {
     super(title, user);
   }
 
-  generateView(flag?: string, bgColor?: string, data?: any[]): string {
+generateView(
+    flag?: string,
+    bgColor?: string,
+    data?: any[],
+    galeriaWybrana?: string,
+    sortuj?: string,
+    strona?: number,
+  ): string {
     const layoutMapper: Record<string, () => string> = {
       home: mainContent,
       offer: offerContent,
@@ -39,6 +47,13 @@ export class SiteBuilder extends SiteTemplate implements View {
 
     if (flag === 'baza' && data) {
       content = bazaContent(data);
+    } else if (flag === 'galeria') {
+      content = galeriaContent(
+        data ?? [],
+        galeriaWybrana ?? 'standing',
+        sortuj ?? 'najstarsze',
+        strona ?? 1,
+      );
     } else if (flag && layoutMapper[flag]) {
       content = layoutMapper[flag]();
     } else {

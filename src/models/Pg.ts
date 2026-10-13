@@ -42,4 +42,25 @@ export class PG {
       'SELECT * FROM table_name ORDER BY create_time DESC',
     );
   }
+
+  async queryZdjecia(galeria?: string) {
+    if (galeria) {
+      return await this.client.any(
+        'SELECT * FROM zdjecia WHERE galeria = $1 ORDER BY idt',
+        [galeria],
+      );
+    }
+    return await this.client.any('SELECT * FROM zdjecia ORDER BY idt');
+  }
+
+  async dodajZdjecie(link: string, galeria: string, komentarz: string) {
+    return await this.client.none(
+      'INSERT INTO zdjecia (link, galeria, komentarz) VALUES ($1, $2, $3)',
+      [link, galeria, komentarz],
+    );
+  }
+
+  async usunZdjecie(idt: number) {
+    return await this.client.none('DELETE FROM zdjecia WHERE idt = $1', [idt]);
+  }
 }

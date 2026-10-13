@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import { PageController } from '../controllers/PageController';
+import { upload } from '../middleware/upload.middleware';
 
 export class AppRouter {
   public static init(server: Express): void {
@@ -19,5 +20,8 @@ export class AppRouter {
     server.get('/z1/login', PageController.loginPage());
     server.post('/z1/login', PageController.handleLogin());
     server.get('/z1/logout', PageController.handleLogout());
+    server.get('/z1/galeria', PageController.galleryPage());
+    server.post('/z1/galeria/dodaj-zdjecie', upload.single('zdjecie'), PageController.handleAddPhoto());
+    server.post('/z1/galeria/usun-zdjecie', PageController.handleDeletePhoto());
   }
 }

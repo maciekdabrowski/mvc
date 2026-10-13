@@ -10,6 +10,7 @@ export const header = (user?: string | null) => {
                 <a href="/z1/pisza-o-nas">Piszą o nas</a>
                 <a href="/z1/mapa">Mapa</a>
                 <a href="/z1/kontakt">Kontakt</a>
+                <a href="/z1/galeria">Galeria</a>
                 <a href="/z1/baza">Baza</a>
                 <a href="/z1/wyglad">Wygląd</a>
                 ${user
